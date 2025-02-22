@@ -1,0 +1,32 @@
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+.sidebar-icon,
+.sidebar-text {
+  color: #030448;
+  transition: color 0.3s ease-in-out;
+}
+
+.sidebar-item:hover {
+  background-color: #030448;
+}
+
+.sidebar-item:hover .sidebar-icon,
+.sidebar-item:hover .sidebar-text {
+  color: #dcf3fb;
+}
+
+.sidebar-item.active {
+  background-color: #030448;
+}
+
+.sidebar-item.active .sidebar-icon,
+.sidebar-item.active .sidebar-text {
+  color: #dcf3fb;
+}
