@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import SidebarItem from "./SidebarItem";
 import { Home, Search, Book, Info } from "lucide-react"; // Example icons
 import "./Sidebar.css";
-const Sidebar = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-
+const Sidebar = ({ activeIndex, setActiveIndex }) => {
   const menuItems = [
     { icon: <Home size={30} />, text: "Home" },
     { icon: <Search size={30} />, text: "Scans History" },
