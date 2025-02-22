@@ -1,0 +1,15 @@
+body {
+  font-family: PoppinsRegular;
+  background-color: #030448;
+  color: #dcf3fb;
+  padding: 20px;
+}
+.app-container {
+  display: flex;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding-left: 40px;
+  padding-top: 0px;
+}

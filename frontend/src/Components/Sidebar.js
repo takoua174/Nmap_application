@@ -6,14 +6,15 @@ const Sidebar = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const menuItems = [
-    { icon: <Home size={20} />, text: "Home" },
-    { icon: <Search size={20} />, text: "Scans History" },
-    { icon: <Book size={20} />, text: "Documentation" },
-    { icon: <Info size={20} />, text: "About" },
+    { icon: <Home size={30} />, text: "Home" },
+    { icon: <Search size={30} />, text: "Scans History" },
+    { icon: <Book size={30} />, text: "Documentation" },
+    { icon: <Info size={30} />, text: "About" },
   ];
 
   return (
     <div className="sidebar">
+      <img src="/nmap_logo.png" alt="Nmap Logo" className="logo" />
       {menuItems.map((item, index) => (
         <SidebarItem
           key={index}

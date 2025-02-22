@@ -2,7 +2,7 @@
 import React from "react";
 
 const Home = () => {
-  return <div className="content">Welcome to Nmap Scanner</div>;
+  return <div className="content"></div>;
 };
 
 export default Home;

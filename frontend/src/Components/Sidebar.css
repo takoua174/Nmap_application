@@ -1,7 +1,12 @@
 .sidebar {
-  width: 200px;
+  width: 220px;
   background-color: #dcf3fb;
   padding: 20px;
-  height: 100vh;
+  height: 650px;
   border-radius: 25px;
+}
+.logo {
+  display: block;
+  width: 100px;
+  margin: 0 auto 20px;
 }
