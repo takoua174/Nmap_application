@@ -3,6 +3,7 @@ from database import scans_collection
 from models import Scan, ScanResult
 from datetime import datetime
 from bson import ObjectId
+import json
 from bson import json_util
 import json
 #Scan, ScanResult: Pydantic models used for request validation and response formatting.
@@ -11,17 +12,17 @@ import nmap
 router = APIRouter()
 
 @router.post("/scan")
-async def perform_scan(target: str, scan_type: str = "quick"):
+async def perform_scan(target, scan_type: str = "quick"):
     if not target:
         raise HTTPException(status_code=400, detail="Bad request : Target is required !")
 
     nm = nmap.PortScanner()
     #scan_args hia dictionnaire ema mba3ed bil get as scan_type is the key twali takou value wahda
     scan_args = {
-        "quick": "-F",  # Fast scan (common ports)
-        "full": "-p-",  # Full scan (all ports)
-        "os": "-O",     # OS detection
-        "service": "-sV",  # Service version detection
+        "quick": "-F",  
+        "full": "-p-", 
+        "os": "-O",    
+        "service": "-sV",  
     }.get(scan_type, "-F")  # in case mich mrigile scan_args takou par défaut -F
 
     try:
@@ -58,8 +59,8 @@ async def perform_scan(target: str, scan_type: str = "quick"):
 @router.get("/scans")
 async def get_scans():
     cursor = scans_collection.find({})
-    scans = json.loads(json_util.dumps(list(cursor)))
-    return {"status": "success", "scans": scans}
+    scans = json_util.dumps(list(cursor), default=str)
+    return {"status": "success", "scans": json.loads(scans)}
 
 # Re-run a scan by its ID
 @router.post("/scans/rerun/{scan_id}")
