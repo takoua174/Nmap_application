@@ -19,11 +19,17 @@ const Home = () => {
     setError("");
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/scan", {
-        target,
-        scanType,
-      });
-      setResults(response.data);
+      const response = await axios.post(
+        `http://127.0.0.1:8000/api/scan?target=${target}&scan_type=${scanType}`
+      );
+
+      // Check if the response has the expected data
+      if (response.data && Array.isArray(response.data.results)) {
+        setResults(response.data.results);
+        console.log(response.data.results);
+      } else {
+        setError("Invalid response format from the server.");
+      }
     } catch (err) {
       setError("An error occurred while scanning. Please try again.");
     } finally {
