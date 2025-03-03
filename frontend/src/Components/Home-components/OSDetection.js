@@ -4,7 +4,7 @@ import "./Styles.css";
 
 const PortScanning = () => {
   const [target, setTarget] = useState("");
-  const [results, setResults] = useState(null);
+  const [result, setResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -19,14 +19,10 @@ const PortScanning = () => {
 
     try {
       const response = await axios.post(
-        `http://127.0.0.1:8000/api/scan?target=${target}&scan_type=os`
+        `http://127.0.0.1:8000/api/scan/detect_os?target=${target}&scan_type=os`
       );
-
-      if (response.data && Array.isArray(response.data.results)) {
-        setResults(response.data.results);
-      } else {
-        setError("Invalid response format from the server.");
-      }
+      setResult(response.data);
+      console.log(response.data);
     } catch (err) {
       setError("An error occurred while scanning. Please try again.");
     } finally {
@@ -58,9 +54,9 @@ const PortScanning = () => {
       <button onClick={handleScan} disabled={isLoading}>
         {isLoading ? "Scanning..." : "Start Scan"}
       </button>
-
+      <p className="subtitle">Result :</p>
       {/* Scan Results */}
-      {results && (
+      {result && (
         <div className="results-section">
           <h2>Scan Results</h2>
           <table>
@@ -71,12 +67,10 @@ const PortScanning = () => {
               </tr>
             </thead>
             <tbody>
-              {results.map((result, index) => (
-                <tr key={index}>
-                  <td>{result.ip}</td>
-                  <td>{result.os}</td>
-                </tr>
-              ))}
+              <tr>
+                <td>{result.ip}</td>
+                <td>{result.os}</td>
+              </tr>
             </tbody>
           </table>
         </div>

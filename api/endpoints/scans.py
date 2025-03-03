@@ -17,22 +17,24 @@ async def perform_scan(target, scan_type: str = "quick"):
         raise HTTPException(status_code=400, detail="Bad request : Target is required !")
 
     nm = nmap.PortScanner()
+    print(target)
+    print(scan_type)
     #scan_args hia dictionnaire ema mba3ed bil get as scan_type is the key twali takou value wahda
     scan_args = {
         "quick": "-F",  
         "full": "-p-", 
-        "os": "-O",    
         "service": "-sV",
-        "host dicovery"  :"-sn",
-        "Ping Scan": "-sP",
+        "host-discovery"  :"-sn",
+        "ping": "-sP",
         "tcp-connect": "-sT",
         "syn": "-sS",
         "udp":"-sU",  # in case mich mrigile scan_args takou par défaut -F
         "aggressive": "-A",
     }.get(scan_type, "-F")  # in case mich mrigile scan_args takou par défaut -F
-
+    print (scan_args)
     try:
         nm.scan(target, arguments=scan_args)
+        print(nm.scaninfo())
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Nmap scan failed: {str(e)}")
     # Extract and format the results
@@ -66,7 +68,16 @@ async def get_scans():
     cursor = scans_collection.find({})
     scans = json_util.dumps(list(cursor), default=str)
     return {"status": "success", "scans": json.loads(scans)}
-
+@router.post("/scan/detect_os")
+async def detect_os(target):
+    nm = nmap.PortScanner()
+    try:
+        nm.scan(target, arguments='-O')
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Nmap scan failed: {str(e)}")
+    os = nm[target]['osmatch'][0]['name']
+    print(os)
+    return {"status": "success", "os": os , "ip":target}
 # Re-run a scan by its ID
 @router.post("/scans/rerun/{scan_id}")
 async def rerun_scan(scan_id: str):

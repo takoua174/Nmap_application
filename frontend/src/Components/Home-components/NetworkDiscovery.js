@@ -60,8 +60,8 @@ const NetworkDiscovery = () => {
           value={scanType}
           onChange={(e) => setScanType(e.target.value)}
         >
-          <option value="Ping Scan">Ping Scan</option>
-          <option value="host dicovery">Host Discovery</option>
+          <option value="ping">Ping Scan</option>
+          <option value="host-discovery">Host Discovery</option>
         </select>
       </div>
 
