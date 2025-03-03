@@ -78,6 +78,21 @@ async def detect_os(target):
     os = nm[target]['osmatch'][0]['name']
     print(os)
     return {"status": "success", "os": os , "ip":target}
+@router.post("/scan/network_discovery")
+async def network_discovery(target,scan_type):
+    nm = nmap.PortScanner()
+    try:
+        scan_args = {
+        "host-discovery"  :"-sn",
+        "ping": "-sP"
+        }.get(scan_type, "-sn") 
+        nm.scan(target, arguments=scan_args)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Nmap scan failed: {str(e)}")
+    hosts = nm.all_hosts()
+    print(hosts)
+    state = nm[target].state()
+    return {"status": "success", "hosts": hosts , "state": state}
 # Re-run a scan by its ID
 @router.post("/scans/rerun/{scan_id}")
 async def rerun_scan(scan_id: str):

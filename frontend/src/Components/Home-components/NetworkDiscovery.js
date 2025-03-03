@@ -20,14 +20,14 @@ const NetworkDiscovery = () => {
 
     try {
       const response = await axios.post(
-        `http://127.0.0.1:8000/api/scan?target=${target}&scan_type=${scanType}`
+        `http://127.0.0.1:8000/api/scan/network_discovery?target=${target}&scan_type=${scanType}`
       );
+      console.log(response.data);
 
-      if (response.data && Array.isArray(response.data.results)) {
-        setResults(response.data.results);
-      } else {
-        setError("Invalid response format from the server.");
-      }
+      setResults({
+        hosts: response.data.hosts,
+        targetState: response.data.state,
+      });
     } catch (err) {
       setError("An error occurred while scanning. Please try again.");
     } finally {
@@ -72,8 +72,6 @@ const NetworkDiscovery = () => {
       <button onClick={handleScan} disabled={isLoading}>
         {isLoading ? "Scanning..." : "Start Scan"}
       </button>
-
-      {/* Scan Results */}
       {results && (
         <div className="results-section">
           <h2>Scan Results</h2>
@@ -81,14 +79,14 @@ const NetworkDiscovery = () => {
             <thead>
               <tr>
                 <th>IP Address</th>
-                <th>Status</th>
+                <th>State</th>
               </tr>
             </thead>
             <tbody>
-              {results.map((result, index) => (
+              {results.hosts.map((host, index) => (
                 <tr key={index}>
-                  <td>{result.ip}</td>
-                  <td>{result.state}</td>
+                  <td>{host}</td>
+                  <td>{results.targetState}</td>
                 </tr>
               ))}
             </tbody>
