@@ -22,14 +22,19 @@ async def perform_scan(target, scan_type: str = "quick"):
         "quick": "-F",  
         "full": "-p-", 
         "os": "-O",    
-        "service": "-sV",  
+        "service": "-sV",
+        "host dicovery"  :"-sn",
+        "Ping Scan": "-sP",
+        "tcp-connect": "-sT",
+        "syn": "-sS",
+        "udp":"-sU",  # in case mich mrigile scan_args takou par défaut -F
+        "aggressive": "-A",
     }.get(scan_type, "-F")  # in case mich mrigile scan_args takou par défaut -F
 
     try:
         nm.scan(target, arguments=scan_args)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Nmap scan failed: {str(e)}")
-
     # Extract and format the results
     scan_results = []
     for host in nm.all_hosts():

@@ -22,19 +22,11 @@ const App = () => {
           <Header />
           <div className="content">
             <Routes>
-              <Route path="/" element={<Home />}>
-                <Route
-                  path="/network-discovery"
-                  element={<NetworkDiscovery />}
-                />
-                <Route path="/port-scanning" element={<PortScanning />} />
-                <Route path="/os-detection" element={<OSDetection />} />
-                <Route
-                  path="/service-detection"
-                  element={<ServiceDetection />}
-                />
-              </Route>
-
+              <Route path="/" element={<Home />} />
+              <Route path="/network-discovery" element={<NetworkDiscovery />} />
+              <Route path="/port-scanning" element={<PortScanning />} />
+              <Route path="/os-detection" element={<OSDetection />} />
+              <Route path="/service-detection" element={<ServiceDetection />} />
               <Route path="/scans-history" element={<ScansHistory />} />
               <Route path="/documentation" element={<Documentation />} />
               <Route path="/about" element={<About />} />

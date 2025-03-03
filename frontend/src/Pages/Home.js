@@ -1,9 +1,9 @@
 import React from "react";
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Home.css";
 
 const Home = () => {
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const scanOptions = [
     {
@@ -42,7 +42,7 @@ const Home = () => {
           <div
             key={index}
             className="card"
-            //onClick={() => navigate(option.route)}
+            onClick={() => navigate(option.route)}
           >
             <div className="card-icon">{option.icon}</div>
             <h2>{option.title}</h2>
