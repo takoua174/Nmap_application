@@ -4,6 +4,7 @@
   padding: 20px;
   height: 650px;
   border-radius: 25px;
+  position: fixed;
 }
 .logo {
   display: block;
